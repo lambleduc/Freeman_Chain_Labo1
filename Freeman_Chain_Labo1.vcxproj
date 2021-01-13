@@ -20,9 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Pixel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h" />
+    <ClInclude Include="Pixel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
