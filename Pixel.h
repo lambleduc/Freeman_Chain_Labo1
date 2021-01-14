@@ -1,5 +1,8 @@
 #pragma once
+#define PIXEL_H
 #include <iostream>
+#include <vector>
+#include "Vect2d.h"
 
 class Pixel
 {
@@ -16,7 +19,7 @@ public:
 	void setIsStartingPoint(bool isStartingPoint);
 
 private:
-	int mCoordinates[2];
+	std::vector<Vect2d> mCoordinates;
 	bool mBinaryColor;
 	bool mIsStartingPoint;
 };

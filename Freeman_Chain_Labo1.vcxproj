@@ -21,10 +21,14 @@
   <ItemGroup>
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Pixel.cpp" />
+    <ClCompile Include="Row.cpp" />
+    <ClCompile Include="Vect2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h" />
     <ClInclude Include="Pixel.h" />
+    <ClInclude Include="Row.h" />
+    <ClInclude Include="Vect2d.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
