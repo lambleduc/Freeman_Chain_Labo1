@@ -55,9 +55,7 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 	}
 }
 
-void Image::stockFreemanCodeInfos(string completeFile)
+void Image::stockFreemanCodeInfos()
 {
-	//Stock l'infos dans des struct Sshape
-	
-
 }
+
