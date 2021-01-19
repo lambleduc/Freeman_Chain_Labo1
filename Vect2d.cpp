@@ -1,7 +1,5 @@
 #include "Vect2d.h"
 
-#include <cmath>
-#include <sstream>
 
 //Fichier: Vect2d.cpp
 //GPA665 - Projet 1

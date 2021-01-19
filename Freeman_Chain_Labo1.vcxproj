@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -22,12 +22,14 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Pixel.cpp" />
     <ClCompile Include="Row.cpp" />
+    <ClCompile Include="Sshape.cpp" />
     <ClCompile Include="Vect2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image.h" />
     <ClInclude Include="Pixel.h" />
     <ClInclude Include="Row.h" />
+    <ClInclude Include="Sshape.h" />
     <ClInclude Include="Vect2d.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

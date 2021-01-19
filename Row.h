@@ -1,5 +1,8 @@
 #pragma once
 #define ROW_H
+#include <iostream>
+#include "Pixel.h"
+
 class Row
 {
 public:
@@ -8,5 +11,8 @@ public:
 
 	//getters
 	int pixelCount();
+
+	//setters
+	void setPixelCount();
 };
 

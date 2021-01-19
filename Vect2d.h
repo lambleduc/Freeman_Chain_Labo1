@@ -4,7 +4,8 @@
 
 
 #include <string>
-
+#include <cmath>
+#include <sstream>
 
 class Vect2d
 {

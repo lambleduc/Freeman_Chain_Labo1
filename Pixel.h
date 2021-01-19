@@ -19,6 +19,7 @@ public:
 	void setIsStartingPoint(bool isStartingPoint);
 
 private:
+	//Cant use vector class for the project
 	std::vector<Vect2d> mCoordinates;
 	bool mBinaryColor;
 	bool mIsStartingPoint;

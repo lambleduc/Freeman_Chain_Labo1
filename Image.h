@@ -1,6 +1,10 @@
 #pragma once
 #define Image_H
 #include <iostream>
+#include <string>
+#include <fstream>
+
+#include "Sshape.h"
 
 using namespace std;
 
@@ -10,12 +14,17 @@ public:
 	Image();
 	~Image();
 	int nbShape();
-	int nbLine();
+	int nbRow();
+	int nbColumn();
 	//Check the setters' relevancy considering the initializer
 	void setNbShape(int number);
-	void setNbLine(int number);
+	void setNbRow(int number);
+
+	void readFreemanCodeFile(string pathFreemanCodeFile);
+	void stockFreemanCodeInfos();
 
 private:
 	int mNbShape;
-	int mNbLine;
+	int mNbRow;
+	int mNbColumn;
 };
