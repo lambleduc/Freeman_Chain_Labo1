@@ -5,12 +5,12 @@ struct Sshape
 {
 	Sshape();
 	~Sshape();
-	
-	int CoordX;
-	int CoordY;
+private:
+	int coordX;
+	int coordY;
 	//We will determine the size of array from this number
-	int FreemanNumber;
-	unsigned char* CodeFreeman;
+	int freemanNumber;
+	unsigned char* codeFreeman;
 } ;
 
 //struct Sshape* shapes;
