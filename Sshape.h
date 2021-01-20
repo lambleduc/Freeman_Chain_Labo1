@@ -11,7 +11,5 @@ struct Sshape
 	//We will determine the size of array from this number
 	int FreemanNumber;
 	unsigned char* CodeFreeman;
-} Sshape;
-
-struct Sshape* shapes;
+};
 
