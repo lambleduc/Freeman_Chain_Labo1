@@ -21,7 +21,7 @@ public:
 	void setNbRow(int number);
 
 	void readFreemanCodeFile(string pathFreemanCodeFile);
-	void stockFreemanCodeInfos();
+	void stockFreemanCodeInfos(unsigned char* completeStringFile);
 
 private:
 	int mNbShape;
