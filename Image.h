@@ -17,11 +17,15 @@ public:
 	int nbRow();
 	int nbColumn();
 	//Check the setters' relevancy considering the initializer
-	void setNbShape(int number);
-	void setNbRow(int number);
+	void setNbShape(int shapeCount);
+	void setNbRow(int rowCount);
 
 	void readFreemanCodeFile(string pathFreemanCodeFile);
+	int convertCharToInt(char charact);
+	void convertCharToIntArray(char* lineOfCharac, int* lineOfInt);
 	void stockFreemanCodeInfos(unsigned char* completeStringFile);
+	// Creates an instance of Sshape
+	void createShape();
 
 private:
 	int mNbShape;

@@ -29,13 +29,14 @@ int Image::nbColumn()
 	return 0;
 }
 
-void Image::setNbShape(int number)
+void Image::setNbShape(int shapeCount)
 {
-	mNbShape = number;
+	mNbShape = shapeCount;
 }
 
-void Image::setNbRow(int number)
+void Image::setNbRow(int rowCount)
 {
+	mNbRow = rowCount;
 }
 
 void Image::readFreemanCodeFile(string pathFreemanCodeFile)
@@ -83,7 +84,25 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 	}
 }
 
+int Image::convertCharToInt(char charact) 
+{
+	int convertedInt = charact - '0';
+	return convertedInt;
+}
+
+void Image::convertCharToIntArray(char* lineOfCharac, int * lineOfInt)
+{
+	 
+}
+
 void Image::stockFreemanCodeInfos(unsigned char * completeStringFile)
 {
+	
+}
+
+void Image::createShape()
+{
+	Sshape shape;
+	//shape.coordX =  
 }
 
