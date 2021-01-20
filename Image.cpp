@@ -46,17 +46,31 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 	int lineIterator = 0;
 	while (getline(fileFreeman, line)) 
 	{
+		char n = ' ';
+		int tailleRow = 0;
 		switch (lineIterator)
 		{
 		case 0:
-			mNbRow = line[0];
+			while (line[tailleRow] != n) {
+				tailleRow++;
+			}
+			for (int i = 0; i < tailleRow; i++) {
+				mNbRow += ((int)line[i]-'0')* pow(10, tailleRow-1-i);
+				printf("%d \n",mNbRow);
+			}
+
+
+			/*int firstNumber = line[0];
+			int secondNumber = line[1];
+			mNbRow = firstNumber * 10 + secondNumber;*/
 			//not really sexy ...
-			mNbRow = (int) mNbRow - 48;
+			//mNbRow = (int) mNbRow - 48;
 			mNbColumn = line[1];
 			mNbColumn = (int) mNbColumn - 48;
 			break;
 		case 1:
 			mNbShape = line[0];
+			mNbShape = (int)mNbShape - 48;
 			break;
 		}
 		lineIterator++;

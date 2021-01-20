@@ -24,7 +24,7 @@ public:
 	void stockFreemanCodeInfos(unsigned char* completeStringFile);
 
 private:
-	int mNbShape;
-	int mNbRow;
-	int mNbColumn;
+	int mNbShape=0;
+	int mNbRow=0;
+	int mNbColumn=0;
 };
