@@ -48,30 +48,35 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 	while (getline(fileFreeman, line)) 
 	{
 		//char n = ' ';
-		int tailleRow = 0;
-		int tailleColumn = 0;
+		int rowDigits = 0;
+		int columnDigits = 0;
+		int shapeDigits = 0;
 		switch (lineIterator)
 		{
 		case 0:
 			//not really sexy ...
-			while (line[tailleRow] != ' ') {
-				tailleRow++;
+			while (line[rowDigits] != ' ') {
+				rowDigits++;
 			}
-			for (int i = 0; i < tailleRow; i++) {
-				mNbRow += ((int)line[i] - '0')* pow(10, tailleRow-1-i);
+			for (int i = 0; i < rowDigits; i++) {
+				mNbRow += ((int)line[i] - '0')* pow(10, rowDigits-1-i);
 			}
 		/*	Here, we simply state that the number of digits in our column coordinate will be equal to the length of the line minus the number
 			of digits in our row coordinate, minus the "space" digit*/
-			tailleColumn = line.size() - tailleRow - 1;
+			columnDigits = line.size() - rowDigits- 1;
 
 			//From here on, work in progress still
-			for (int i = 0; i < tailleColumn; i++) {
-				mNbColumn += ((int)line[i] - '0') * pow(10, tailleColumn - 1 - i);
+			for (int i = 0; i < columnDigits; i++) {
+				mNbColumn += ((int)line[i+rowDigits+1] - '0') * pow(10, columnDigits - 1 - i);
 			}
 			break;
 		case 1:
-			mNbShape = line[0];
-			mNbShape = (int)mNbShape - 48;
+			while (line[shapeDigits] != ' ') {
+				shapeDigits++;
+			}
+			for (int i = 0; i < shapeDigits; i++) {
+				mNbShape += ((int)line[i] - '0') * pow(10, shapeDigits - 1 - i);
+			}
 			break;
 		}
 		lineIterator++;
