@@ -23,7 +23,7 @@ public:
 	void readFreemanCodeFile(string pathFreemanCodeFile);
 	int convertCharToInt(char charact);
 	void convertCharToIntArray(char* lineOfCharac, int* lineOfInt);
-	void stockFreemanCodeInfos(unsigned char* completeStringFile);
+	void stockFreemanCodeInfos(char & completeStringFile);
 	// Creates an instance of Sshape
 	void createShape();
 
