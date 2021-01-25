@@ -16,7 +16,7 @@ Image::~Image()
 
 int Image::nbShape()
 {
-	return 0;
+	return mNbShape;
 }
 
 int Image::nbRow()
@@ -109,9 +109,27 @@ void Image::convertCharToIntArray(char* lineOfCharac, int * lineOfInt)
 	 
 }
 
-void Image::stockFreemanCodeInfos(unsigned char * completeStringFile)
+void Image::stockFreemanCodeInfos(char & completeStringFile)
 {
+	// start with a conversion of chars to int
+
+
+	//create an array of Sshape
+	Sshape** sshapeArray = new Sshape*[mNbShape];
+	// ****will probably have to stock the size of each row beforehand
 	
+	//loop on shape objects
+	for (int i = 0; i < mNbShape; i++)
+	{
+		Sshape shapesFreemanCode;
+		sshapeArray[i] = &shapesFreemanCode;
+		shapesFreemanCode.setCoordX();
+		shapesFreemanCode.setCoordY();
+		shapesFreemanCode.setFreemanNumber();
+		shapesFreemanCode
+		
+	}
+
 }
 
 void Image::createShape()
