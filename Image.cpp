@@ -78,24 +78,6 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 		std::cout << line << '\n';
 	}
 	
-	//create an instance of ifstream
-	ifstream freemanCodeTextFile;
-	freemanCodeTextFile.open(pathFreemanCodeFile);
-
-	if (freemanCodeTextFile.is_open()) {
-		// save the file as one string to start
-		char * completeFile = new char[freemanCodeTextFile.gcount()];
-
-		for (int i = 0; i < freemanCodeTextFile.gcount(); i++)
-		{
-			freemanCodeTextFile >> completeFile[i];
-			if (freemanCodeTextFile.eof())
-				break;
-			cout << completeFile[i];
-		}	
-		
-		delete[] completeFile;
-	}
 }
 
 int Image::convertCharToInt(char charact) 
@@ -109,8 +91,9 @@ void Image::convertCharToIntArray(char* lineOfCharac, int * lineOfInt)
 	 
 }
 
-void Image::stockFreemanCodeInfos(char & completeStringFile)
+void Image::stockFreemanCodeInfos(ifstream fileFreeman)
 {
+	// On s'intéresse à forme en tant que telles
 	// start with a conversion of chars to int
 
 
@@ -119,17 +102,50 @@ void Image::stockFreemanCodeInfos(char & completeStringFile)
 	// ****will probably have to stock the size of each row beforehand
 	
 	//loop on shape objects
-	for (int i = 0; i < mNbShape; i++)
+	for (int i = 2; i < mNbShape; i++)
 	{
 		Sshape shapesFreemanCode;
 		sshapeArray[i] = &shapesFreemanCode;
-		shapesFreemanCode.setCoordX();
-		shapesFreemanCode.setCoordY();
-		shapesFreemanCode.setFreemanNumber();
-		shapesFreemanCode
+		
+		string fileLineAssociatedToShape;
+		getSpecificLine(fileFreeman, i, fileLineAssociatedToShape);
+		
+		shapesFreemanCode.setCoordX(fileLineAssociatedToShape[0]);
+		shapesFreemanCode.setCoordY(fileLineAssociatedToShape[1]);
+		shapesFreemanCode.setFreemanNumber(fileLineAssociatedToShape[2]);
+		shapesFreemanCode.setCodeFreeman(readAssociatedFreemanCodeLine(fileFreeman, i), );
 		
 	}
 
+}
+
+void Image::getSpecificLine(ifstream textFile, int desiredLineOfFile, string & adresseOfFile)
+{
+	//static string stringToReturn;
+	string tempStringToReturn;
+
+	for (int i = 0; i <= desiredLineOfFile; i++)
+	{
+		if (i != desiredLineOfFile) 
+		{
+			continue;
+		}
+		else
+		{
+			getline(textFile, tempStringToReturn);
+			//put the value of the string at the corresponding adresse
+			adresseOfFile = tempStringToReturn;
+			break;
+		}		
+	}
+}
+
+int* Image::readAssociatedFreemanCodeLine(ifstream freemanCodeLine, int fileLine)
+{
+	string stringLine;
+	
+	
+	return wholeFreemanCodeLine;
 }
 
 void Image::createShape()
