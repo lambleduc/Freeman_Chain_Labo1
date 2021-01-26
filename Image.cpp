@@ -48,30 +48,33 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 	while (getline(fileFreeman, line)) 
 	{
 		//char n = ' ';
-		int tailleRow = 0;
-		int tailleColumn = 0;
+		int rowDigits = 0;
+		int columnDigits = 0;
+		int shapeDigits = 0;
 		switch (lineIterator)
 		{
 		case 0:
 			//not really sexy ...
-			while (line[tailleRow] != ' ') {
-				tailleRow++;
+			while (line[rowDigits] != ' ') {
+				rowDigits++;
 			}
-			for (int i = 0; i < tailleRow; i++) {
-				mNbRow += ((int)line[i] - '0')* pow(10, tailleRow-1-i);
-			}
+			mNbRow = convertCharToIntArray(line, rowDigits, 0);
+
 		/*	Here, we simply state that the number of digits in our column coordinate will be equal to the length of the line minus the number
 			of digits in our row coordinate, minus the "space" digit*/
-			tailleColumn = line.size() - tailleRow - 1;
+			columnDigits = line.size() - rowDigits- 1;
 
 			//From here on, work in progress still
-			for (int i = 0; i < tailleColumn; i++) {
-				mNbColumn += ((int)line[i] - '0') * pow(10, tailleColumn - 1 - i);
-			}
+			mNbColumn = convertCharToIntArray(line, columnDigits, rowDigits + 1);
+
 			break;
 		case 1:
-			mNbShape = line[0];
-			mNbShape = (int)mNbShape - 48;
+			while (line[shapeDigits] != '\0') {
+				shapeDigits++;
+			}
+			
+			mNbShape = convertCharToIntArray(line, shapeDigits, 0);
+
 			break;
 		}
 		lineIterator++;
@@ -86,9 +89,13 @@ int Image::convertCharToInt(char charact)
 	return convertedInt;
 }
 
-void Image::convertCharToIntArray(char* lineOfCharac, int * lineOfInt)
+int Image::convertCharToIntArray(string line, int length, int startDigit)
 {
-	 
+	int sum = 0;
+	for (int i = 0; i < length; i++) {
+		sum += (((int)line[i + startDigit]) - (int)'0') * pow(10, length - 1 - i);
+	}
+	return sum;
 }
 
 void Image::stockFreemanCodeInfos(ifstream fileFreeman)
