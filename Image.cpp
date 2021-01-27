@@ -43,7 +43,8 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 {
 	
 	std::string line;
-	std::ifstream fileFreeman(pathFreemanCodeFile);
+	std::ifstream fileFreeman;
+	fileFreeman.open(pathFreemanCodeFile, std::ifstream::in);
 	int lineIterator = 0;
 	while (getline(fileFreeman, line)) 
 	{
@@ -80,7 +81,9 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 		lineIterator++;
 		std::cout << line << '\n';
 	}
-	
+	fileFreeman.seekg(0);
+	stockFreemanCodeInfos(fileFreeman);
+	fileFreeman.close();
 }
 
 int Image::convertCharToInt(char charact) 
@@ -98,12 +101,12 @@ int Image::convertCharToIntArray(string line, int length, int startDigit)
 	return sum;
 }
 
-void Image::stockFreemanCodeInfos(ifstream fileFreeman)
+void Image::stockFreemanCodeInfos(ifstream & fileFreeman)
 {
 	// On s'intéresse à forme en tant que telles
 	// start with a conversion of chars to int
 
-
+	
 	//create an array of Sshape
 	Sshape** sshapeArray = new Sshape*[mNbShape];
 	// ****will probably have to stock the size of each row beforehand
@@ -117,47 +120,47 @@ void Image::stockFreemanCodeInfos(ifstream fileFreeman)
 		string fileLineAssociatedToShape;
 		getSpecificLine(fileFreeman, i, fileLineAssociatedToShape);
 		
+
 		shapesFreemanCode.setCoordX(fileLineAssociatedToShape[0]);
 		shapesFreemanCode.setCoordY(fileLineAssociatedToShape[1]);
 		shapesFreemanCode.setFreemanNumber(fileLineAssociatedToShape[2]);
-		shapesFreemanCode.setCodeFreeman(readAssociatedFreemanCodeLine(fileFreeman, i), );
+		shapesFreemanCode.setCodeFreeman(readAssociatedFreemanCodeLine(fileLineAssociatedToShape, shapesFreemanCode.freemanNumber()));
 		
 	}
 
 }
 
-void Image::getSpecificLine(ifstream textFile, int desiredLineOfFile, string & adresseOfFile)
+void Image::getSpecificLine(ifstream & textFile, int desiredLineOfFile, string & adresseOfFileLine)
 {
 	//static string stringToReturn;
 	string tempStringToReturn;
+	getline(textFile, tempStringToReturn);
+	std::cout << textFile.gcount() << '\n';
 
 	for (int i = 0; i <= desiredLineOfFile; i++)
 	{
 		if (i != desiredLineOfFile) 
 		{
-			continue;
+			getline(textFile, tempStringToReturn);
 		}
 		else
 		{
 			getline(textFile, tempStringToReturn);
 			//put the value of the string at the corresponding adresse
-			adresseOfFile = tempStringToReturn;
+			adresseOfFileLine = tempStringToReturn;
 			break;
 		}		
 	}
 }
 
-int* Image::readAssociatedFreemanCodeLine(ifstream freemanCodeLine, int fileLine)
+int** Image::readAssociatedFreemanCodeLine(string line, int codeSize)
 {
-	string stringLine;
+	// convert string values to int and put it in a int *
+	int* freemanCode = new int[codeSize];
+	for (int i = 0; i < codeSize; i++)
+	{
+		freemanCode[i] = convertCharToInt(line[i]);
+	}
 	
-	
-	return wholeFreemanCodeLine;
+	return &freemanCode;
 }
-
-void Image::createShape()
-{
-	Sshape shape;
-	//shape.coordX =  
-}
-

@@ -2,6 +2,7 @@
 
 Sshape::Sshape()
 {
+	//initialize to 0
 }
 
 Sshape::~Sshape()
@@ -10,17 +11,17 @@ Sshape::~Sshape()
 
 int Sshape::coordX()
 {
-	return 0;
+	return mCoordX;
 }
 
 int Sshape::coordY()
 {
-	return 0;
+	return mCoordY;
 }
 
 int Sshape::freemanNumber()
 {
-	return 0;
+	return mFreemanNumber;
 }
 
 void Sshape::setCoordX(int coordX)
@@ -38,12 +39,8 @@ void Sshape::setFreemanNumber(int freemanNumber)
 	mFreemanNumber = freemanNumber;
 }
 
-void Sshape::setCodeFreeman(int* codeFreeman, int freemanNumber)
+void Sshape::setCodeFreeman(int** codeFreeman)
 {
-	int* mCodeFreeman = new int[freemanNumber];
-	for (int i = 0; i < freemanNumber; i++)
-	{
-		mCodeFreeman[i] = codeFreeman[i];
-	}
+	mCodeFreeman = *codeFreeman;
 }
 
