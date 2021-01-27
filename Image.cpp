@@ -98,7 +98,7 @@ int Image::convertCharToIntArray(string line, int length, int startDigit)
 	return sum;
 }
 
-void Image::stockFreemanCodeInfos(ifstream fileFreeman)
+void Image::stockFreemanCodeInfos(ifstream & fileFreeman)
 {
 	// On s'intéresse à forme en tant que telles
 	// start with a conversion of chars to int
@@ -126,7 +126,7 @@ void Image::stockFreemanCodeInfos(ifstream fileFreeman)
 
 }
 
-void Image::getSpecificLine(ifstream textFile, int desiredLineOfFile, string & adresseOfFile)
+void Image::getSpecificLine(ifstream & textFile, int desiredLineOfFile, string & adresseOfFile)
 {
 	//static string stringToReturn;
 	string tempStringToReturn;
@@ -149,7 +149,6 @@ void Image::getSpecificLine(ifstream textFile, int desiredLineOfFile, string & a
 
 int* Image::readAssociatedFreemanCodeLine(ifstream freemanCodeLine, int fileLine)
 {
-	string stringLine;
 	
 	
 	return wholeFreemanCodeLine;
