@@ -25,8 +25,8 @@ public:
 	int convertCharToIntArray(string line, int length, int startDigit);
 	void stockFreemanCodeInfos(ifstream & fileFreeman);
 	void getSpecificLine(ifstream & textFile, int desiredLineOfFile, string& adresseOfFile);
-	// Creates an instance of Sshape
-	void createShape();
+	int** readAssociatedFreemanCodeLine(string Line, int codeSize);
+
 
 private:
 	int mNbShape=0;
