@@ -23,9 +23,9 @@ public:
 	void readFreemanCodeFile(string pathFreemanCodeFile);
 	int convertCharToInt(char charact);
 	int convertCharToIntArray(string line, int length, int startDigit);
-	void stockFreemanCodeInfos(ifstream & fileFreeman);
+	Sshape* stockFreemanCodeInfos(string line);
 	void getSpecificLine(ifstream & textFile, int desiredLineOfFile, string& adresseOfFile);
-	int** readAssociatedFreemanCodeLine(string Line, int codeSize);
+	int** readAssociatedFreemanCodeLine(string Line, int codeSize, int startFreeman);
 
 
 private:

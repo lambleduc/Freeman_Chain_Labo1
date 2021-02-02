@@ -24,6 +24,14 @@ int Sshape::freemanNumber()
 	return mFreemanNumber;
 }
 
+void Sshape::displayCodeFreeman()
+{
+	for (int i = 0; i < mFreemanNumber; i++)
+	{
+		std::cout << mCodeFreeman[i];
+	}
+}
+
 void Sshape::setCoordX(int coordX)
 {
 	mCoordX = coordX;

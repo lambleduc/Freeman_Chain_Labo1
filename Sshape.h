@@ -8,6 +8,8 @@ struct Sshape
 	int coordX();
 	int coordY();
 	int freemanNumber();
+
+	void displayCodeFreeman();
 	
 
 	void setCoordX(int coordX);
