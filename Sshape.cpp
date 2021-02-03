@@ -25,6 +25,11 @@ int Sshape::freemanNumber()
 	return mFreemanNumber;
 }
 
+Pixel** Sshape::pixels()
+{
+	return mPixels;
+}
+
 void Sshape::displayCodeFreeman()
 {
 	for (int i = 0; i < mFreemanNumber; i++)
@@ -61,20 +66,27 @@ void Sshape::createPixels()
 	int currentY = mCoordY;
 	int* tempXCoord = &currentX;
 	int* tempYCoord = &currentY;
+	
+	mPixels = new Pixel * [mFreemanNumber];
 
 	for (int i = 0; i < mFreemanNumber; i++)
 	{
+		mPixels[i] = new Pixel();
 		if(i == 0)
 		{
 			// create the starting pixel from coordx, coordy
-			Pixel pixel{};
-			pixel.setCoordinates(mCoordX, mCoordY);
+			
+			mPixels[i]->setCoordinates(mCoordX, mCoordY);
+			mPixels[i]->setIsStartingPoint(true);
 		}
 		else 
 		{
-			Pixel pixel{};
-			findPixelCoordinate(mCodeFreeman[i+3], pixel, tempXCoord, tempYCoord);
+			
+			findPixelCoordinate(mCodeFreeman[i - 1], *mPixels[i], tempXCoord, tempYCoord);
+		
 		}
+		
+		
 	}
 }
 

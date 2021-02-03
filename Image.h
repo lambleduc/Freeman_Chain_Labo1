@@ -27,10 +27,12 @@ public:
 	void stockFreemanCodeInfos(Sshape & shapeArray, string line);
 	void getSpecificLine(ifstream & textFile, int desiredLineOfFile, string& adresseOfFile);
 	void readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string Line, int codeSize, int startFreeman);
+	void screenDisplay();
 
 
 private:
 	int mNbShape=0;
 	int mNbRow=0;
 	int mNbColumn=0;
+	Sshape** mSshapeArray;
 };

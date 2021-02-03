@@ -8,6 +8,7 @@ Image::Image()
 	mNbShape{ 0 }
 {
 	readFreemanCodeFile("FreemanCode.txt");
+	screenDisplay();
 }
 
 Image::~Image()
@@ -70,18 +71,20 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 
 	mNbShape = convertCharToIntArray(line, shapeDigits, 0);
 
+	//could be a problem here when we leave the function
+	//Sshape** sshapeArray = new Sshape * [mNbShape];
 
-	Sshape** sshapeArray = new Sshape * [mNbShape];
+	mSshapeArray = new Sshape * [mNbShape];
 	for (int i = 0; i < mNbShape; i++)
 	{
-		sshapeArray[i] = new Sshape();
+		mSshapeArray[i] = new Sshape();
 		getline(fileFreeman, line);
-		stockFreemanCodeInfos(*sshapeArray[i], line);
+		stockFreemanCodeInfos(*mSshapeArray[i], line);
 	}
 	fileFreeman.close();
 	for (int i = 0; i < mNbShape; i++)
 	{
-		sshapeArray[i]->displayCodeFreeman();
+		mSshapeArray[i]->displayCodeFreeman();
 		printf("\n");
 	}
 
@@ -173,4 +176,20 @@ void Image::readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string lin
 	}
 	shapesFreemanCode.setCodeFreeman(freemanCode);
 	
+}
+
+void Image::screenDisplay()
+{
+	for (int i = 0; i < mNbShape; i++)
+	{
+		mSshapeArray[i]->createPixels();
+		for (int j = 0; j < mSshapeArray[i]->freemanNumber(); j++)
+		{
+			cout << mSshapeArray[i]->pixels()[j]->coordinates().x();
+			cout << mSshapeArray[i]->pixels()[j]->coordinates().y();
+
+			cout << endl;
+		}
+		
+	}	
 }

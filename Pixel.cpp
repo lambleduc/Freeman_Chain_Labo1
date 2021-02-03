@@ -2,6 +2,7 @@
 
 Pixel::Pixel()
 {
+	//dont forget to add member initializer list
 }
 
 Pixel::~Pixel()

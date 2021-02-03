@@ -9,6 +9,7 @@ struct Sshape
 	int coordX();
 	int coordY();
 	int freemanNumber();
+	Pixel** pixels();
 
 	void displayCodeFreeman();
 	
