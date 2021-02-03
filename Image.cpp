@@ -74,16 +74,17 @@ void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 	Sshape** sshapeArray = new Sshape * [mNbShape];
 	for (int i = 0; i < mNbShape; i++)
 	{
+		sshapeArray[i] = new Sshape();
 		getline(fileFreeman, line);
-		sshapeArray[i] = stockFreemanCodeInfos(line);
+		stockFreemanCodeInfos(*sshapeArray[i], line);
 	}
-
+	fileFreeman.close();
 	for (int i = 0; i < mNbShape; i++)
 	{
 		sshapeArray[i]->displayCodeFreeman();
 		printf("\n");
 	}
-	fileFreeman.close();
+
 }
 
 int Image::convertCharToInt(char charact)
@@ -100,7 +101,7 @@ int Image::convertCharToIntArray(string line, int length, int startDigit)
 	return sum;
 }
 
-Sshape* Image::stockFreemanCodeInfos(string line)
+void Image::stockFreemanCodeInfos(Sshape & shape, string line)
 {
 	// On s'intéresse à forme en tant que telles
 	// start with a conversion of chars to int
@@ -112,7 +113,6 @@ Sshape* Image::stockFreemanCodeInfos(string line)
 
 	//loop on shape objects
 
-	Sshape shapesFreemanCode;
 	int xDigits = 0;
 	int yDigits = 0;
 	int freemanDigits = 0;
@@ -125,14 +125,11 @@ Sshape* Image::stockFreemanCodeInfos(string line)
 	while (line[xDigits + yDigits + 2 + freemanDigits] != ' ') {
 		freemanDigits++;
 	}
-	
-	shapesFreemanCode.setCoordX(convertCharToIntArray(line, xDigits, 0));
-	shapesFreemanCode.setCoordY(convertCharToIntArray(line, yDigits, xDigits + 1));
-	shapesFreemanCode.setFreemanNumber(convertCharToIntArray(line, freemanDigits, xDigits + yDigits + 2));
-	shapesFreemanCode.setCodeFreeman(readAssociatedFreemanCodeLine(line, shapesFreemanCode.freemanNumber(), xDigits+yDigits+freemanDigits+3));
 
-
-	return &shapesFreemanCode;
+	shape.setCoordX(convertCharToIntArray(line, xDigits, 0));
+	shape.setCoordY(convertCharToIntArray(line, yDigits, xDigits + 1));
+	shape.setFreemanNumber(convertCharToIntArray(line, freemanDigits, xDigits + yDigits + 2));
+	readAssociatedFreemanCodeLine(shape, line, shape.freemanNumber(), INDEX_FREEMAN_START);
 }
 
 void Image::getSpecificLine(ifstream& textFile, int desiredLineOfFile, string& adresseOfFileLine)
@@ -140,7 +137,6 @@ void Image::getSpecificLine(ifstream& textFile, int desiredLineOfFile, string& a
 	//static string stringToReturn;
 	string tempStringToReturn;
 	getline(textFile, tempStringToReturn);
-	std::cout << textFile.gcount() << '\n';
 
 	for (int i = 0; i <= desiredLineOfFile; i++)
 	{
@@ -158,18 +154,23 @@ void Image::getSpecificLine(ifstream& textFile, int desiredLineOfFile, string& a
 	}
 }
 
-int** Image::readAssociatedFreemanCodeLine(string line, int codeSize, int startFreeman)
+void Image::readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string line, int codeSize, int startFreeman)
 {
 	// convert string values to int and put it in a int *
-	int* freemanCode = new int[codeSize * 2 - 1];
+	int* freemanCode = new int[codeSize];
 	int j = 0;
-	for (int i = startFreeman; i < ((codeSize*2-1)+startFreeman); i++)
-	{
-		if(i%2!=0){
-			freemanCode[j] = convertCharToInt(line[i]);
+	int i = 0;
+	istringstream ss(line);
+	string token;
+	char value;
+	while (getline(ss, token, ' ') && j<codeSize) {
+		if (i > startFreeman) {
+			value = token[0];
+			freemanCode[j] = convertCharToInt(value);
 			j++;
 		}
+		i++;
 	}
-
-	return &freemanCode;
+	shapesFreemanCode.setCodeFreeman(freemanCode);
+	
 }

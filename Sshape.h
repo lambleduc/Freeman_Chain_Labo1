@@ -15,7 +15,7 @@ struct Sshape
 	void setCoordX(int coordX);
 	void setCoordY(int coordY);
 	void setFreemanNumber(int freemanNumber);
-	void setCodeFreeman(int** codeFreeman);
+	void setCodeFreeman(int* codeFreeman);
 
 private:
 	int mCoordX;
