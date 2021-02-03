@@ -9,12 +9,14 @@ struct Sshape
 	int coordX();
 	int coordY();
 	int freemanNumber();
+
+	void displayCodeFreeman();
 	
 
 	void setCoordX(int coordX);
 	void setCoordY(int coordY);
 	void setFreemanNumber(int freemanNumber);
-	void setCodeFreeman(int** codeFreeman);
+	void setCodeFreeman(int* codeFreeman);
 
 	void createPixels();
 	void findPixelCoordinate(int direction, Pixel& pixel, int* currentXCoord, int* currentYCoord);

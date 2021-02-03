@@ -3,9 +3,10 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-
+#include <sstream>
 #include "Sshape.h"
 
+#define INDEX_FREEMAN_START 2
 using namespace std;
 
 class Image
@@ -23,9 +24,9 @@ public:
 	void readFreemanCodeFile(string pathFreemanCodeFile);
 	int convertCharToInt(char charact);
 	int convertCharToIntArray(string line, int length, int startDigit);
-	void stockFreemanCodeInfos(ifstream & fileFreeman);
+	void stockFreemanCodeInfos(Sshape & shapeArray, string line);
 	void getSpecificLine(ifstream & textFile, int desiredLineOfFile, string& adresseOfFile);
-	int** readAssociatedFreemanCodeLine(string Line, int codeSize);
+	void readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string Line, int codeSize, int startFreeman);
 
 
 private:

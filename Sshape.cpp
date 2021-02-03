@@ -25,6 +25,16 @@ int Sshape::freemanNumber()
 	return mFreemanNumber;
 }
 
+void Sshape::displayCodeFreeman()
+{
+	for (int i = 0; i < mFreemanNumber; i++)
+	{
+		std::cout << mCodeFreeman[i] << ' ';
+	}
+	std::cout << std::endl;
+		
+}
+
 void Sshape::setCoordX(int coordX)
 {
 	mCoordX = coordX;
@@ -40,9 +50,9 @@ void Sshape::setFreemanNumber(int freemanNumber)
 	mFreemanNumber = freemanNumber;
 }
 
-void Sshape::setCodeFreeman(int** codeFreeman)
+void Sshape::setCodeFreeman(int* codeFreeman)
 {
-	mCodeFreeman = *codeFreeman;
+	mCodeFreeman = codeFreeman;
 }
 
 void Sshape::createPixels()

@@ -3,9 +3,9 @@
 
 Image::Image()
 	:
-	mNbColumn{0},
-	mNbRow{0},
-	mNbShape{0}
+	mNbColumn{ 0 },
+	mNbRow{ 0 },
+	mNbShape{ 0 }
 {
 	readFreemanCodeFile("FreemanCode.txt");
 }
@@ -41,55 +41,55 @@ void Image::setNbRow(int rowCount)
 
 void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 {
-	
+
 	std::string line;
 	std::ifstream fileFreeman;
 	fileFreeman.open(pathFreemanCodeFile, std::ifstream::in);
 	int lineIterator = 0;
-	while (getline(fileFreeman, line)) 
-	{
-		//char n = ' ';
-		int rowDigits = 0;
-		int columnDigits = 0;
-		int shapeDigits = 0;
-		switch (lineIterator)
-		{
-		case 0:
-			//not really sexy ...
-			while (line[rowDigits] != ' ') {
-				rowDigits++;
-			}
-			mNbRow = convertCharToIntArray(line, rowDigits, 0);
 
-		/*	Here, we simply state that the number of digits in our column coordinate will be equal to the length of the line minus the number
-			of digits in our row coordinate, minus the "space" digit*/
-			columnDigits = line.size() - rowDigits- 1;
-
-			//From here on, work in progress still
-			mNbColumn = convertCharToIntArray(line, columnDigits, rowDigits + 1);
-
-			break;
-		case 1:
-			while (line[shapeDigits] != '\0') {
-				shapeDigits++;
-			}
-			
-			mNbShape = convertCharToIntArray(line, shapeDigits, 0);
-
-			break;
-		}
-		lineIterator++;
-		std::cout << line << '\n';
+	int rowDigits = 0;
+	int columnDigits = 0;
+	int shapeDigits = 0;
+	getline(fileFreeman, line);
+	//not really sexy ...
+	while (line[rowDigits] != ' ') {
+		rowDigits++;
 	}
-	fileFreeman.seekg(0);
-	stockFreemanCodeInfos(fileFreeman);
+	mNbRow = convertCharToIntArray(line, rowDigits, 0);
+
+	/*	Here, we simply state that the number of digits in our column coordinate will be equal to the length of the line minus the number
+		of digits in our row coordinate, minus the "space" digit*/
+	columnDigits = line.size() - rowDigits - 1;
+
+	//From here on, work in progress still
+	mNbColumn = convertCharToIntArray(line, columnDigits, rowDigits + 1);
+	getline(fileFreeman, line);
+	while (line[shapeDigits] != '\0') {
+		shapeDigits++;
+	}
+
+	mNbShape = convertCharToIntArray(line, shapeDigits, 0);
+
+
+	Sshape** sshapeArray = new Sshape * [mNbShape];
+	for (int i = 0; i < mNbShape; i++)
+	{
+		sshapeArray[i] = new Sshape();
+		getline(fileFreeman, line);
+		stockFreemanCodeInfos(*sshapeArray[i], line);
+	}
 	fileFreeman.close();
+	for (int i = 0; i < mNbShape; i++)
+	{
+		sshapeArray[i]->displayCodeFreeman();
+		printf("\n");
+	}
+
 }
 
-int Image::convertCharToInt(char charact) 
+int Image::convertCharToInt(char charact)
 {
-	int convertedInt = charact - '0';
-	return convertedInt;
+	return (int)charact - '0';
 }
 
 int Image::convertCharToIntArray(string line, int length, int startDigit)
@@ -101,45 +101,46 @@ int Image::convertCharToIntArray(string line, int length, int startDigit)
 	return sum;
 }
 
-void Image::stockFreemanCodeInfos(ifstream & fileFreeman)
+void Image::stockFreemanCodeInfos(Sshape & shape, string line)
 {
 	// On s'intéresse à forme en tant que telles
 	// start with a conversion of chars to int
 
-	
-	//create an array of Sshape
-	Sshape** sshapeArray = new Sshape*[mNbShape];
-	// ****will probably have to stock the size of each row beforehand
-	
-	//loop on shape objects
-	for (int i = 2; i < mNbShape; i++)
-	{
-		Sshape shapesFreemanCode;
-		sshapeArray[i] = &shapesFreemanCode;
-		
-		string fileLineAssociatedToShape;
-		getSpecificLine(fileFreeman, i, fileLineAssociatedToShape);
-		
 
-		shapesFreemanCode.setCoordX(fileLineAssociatedToShape[0]);
-		shapesFreemanCode.setCoordY(fileLineAssociatedToShape[1]);
-		shapesFreemanCode.setFreemanNumber(fileLineAssociatedToShape[2]);
-		shapesFreemanCode.setCodeFreeman(readAssociatedFreemanCodeLine(fileLineAssociatedToShape, shapesFreemanCode.freemanNumber()));
-		
+	//create an array of Sshape
+
+	// ****will probably have to stock the size of each row beforehand
+
+	//loop on shape objects
+
+	int xDigits = 0;
+	int yDigits = 0;
+	int freemanDigits = 0;
+	while (line[xDigits] != ' ') {
+		xDigits++;
+	}
+	while (line[xDigits + 1 + yDigits] != ' ') {
+		yDigits++;
+	}
+	while (line[xDigits + yDigits + 2 + freemanDigits] != ' ') {
+		freemanDigits++;
 	}
 
+	shape.setCoordX(convertCharToIntArray(line, xDigits, 0));
+	shape.setCoordY(convertCharToIntArray(line, yDigits, xDigits + 1));
+	shape.setFreemanNumber(convertCharToIntArray(line, freemanDigits, xDigits + yDigits + 2));
+	readAssociatedFreemanCodeLine(shape, line, shape.freemanNumber(), INDEX_FREEMAN_START);
 }
 
-void Image::getSpecificLine(ifstream & textFile, int desiredLineOfFile, string & adresseOfFileLine)
+void Image::getSpecificLine(ifstream& textFile, int desiredLineOfFile, string& adresseOfFileLine)
 {
 	//static string stringToReturn;
 	string tempStringToReturn;
 	getline(textFile, tempStringToReturn);
-	std::cout << textFile.gcount() << '\n';
 
 	for (int i = 0; i <= desiredLineOfFile; i++)
 	{
-		if (i != desiredLineOfFile) 
+		if (i != desiredLineOfFile)
 		{
 			getline(textFile, tempStringToReturn);
 		}
@@ -149,18 +150,27 @@ void Image::getSpecificLine(ifstream & textFile, int desiredLineOfFile, string &
 			//put the value of the string at the corresponding adresse
 			adresseOfFileLine = tempStringToReturn;
 			break;
-		}		
+		}
 	}
 }
 
-int** Image::readAssociatedFreemanCodeLine(string line, int codeSize)
+void Image::readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string line, int codeSize, int startFreeman)
 {
 	// convert string values to int and put it in a int *
 	int* freemanCode = new int[codeSize];
-	for (int i = 0; i < codeSize; i++)
-	{
-		freemanCode[i] = convertCharToInt(line[i]);
+	int j = 0;
+	int i = 0;
+	istringstream ss(line);
+	string token;
+	char value;
+	while (getline(ss, token, ' ') && j<codeSize) {
+		if (i > startFreeman) {
+			value = token[0];
+			freemanCode[j] = convertCharToInt(value);
+			j++;
+		}
+		i++;
 	}
+	shapesFreemanCode.setCodeFreeman(freemanCode);
 	
-	return &freemanCode;
 }
