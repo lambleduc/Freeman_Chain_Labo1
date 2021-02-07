@@ -39,5 +39,3 @@ private:
 	Pixel** mPixels;
 };
 
-//struct Sshape* shapes;
-

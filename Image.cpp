@@ -3,11 +3,13 @@
 
 Image::Image()
 	:
+	mInputFileName{},
 	mNbColumn{ 0 },
 	mNbRow{ 0 },
 	mNbShape{ 0 }
 {
-	readFreemanCodeFile("FreemanCode.txt");
+	catchUserFile();
+	readFreemanCodeFile();
 	screenDisplay();
 }
 
@@ -40,12 +42,12 @@ void Image::setNbRow(int rowCount)
 	mNbRow = rowCount;
 }
 
-void Image::readFreemanCodeFile(string pathFreemanCodeFile)
+void Image::readFreemanCodeFile()
 {
 
 	std::string line;
 	std::ifstream fileFreeman;
-	fileFreeman.open(pathFreemanCodeFile, std::ifstream::in);
+	fileFreeman.open(mInputFileName, std::ifstream::in);
 	int lineIterator = 0;
 
 	int rowDigits = 0;
@@ -192,6 +194,14 @@ void Image::screenDisplay()
 	}
 	mergeShapes();
 	writeToFile();
+}
+
+void Image::catchUserFile()
+{
+	string userFileName;
+	cout << "Enter file name (with extension)" << endl;
+	cin >> userFileName;
+	mInputFileName = userFileName;
 }
 
 void Image::mergeShapes()
