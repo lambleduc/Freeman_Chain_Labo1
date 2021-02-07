@@ -60,6 +60,11 @@ void Sshape::setCodeFreeman(int* codeFreeman)
 	mCodeFreeman = codeFreeman;
 }
 
+int Sshape::nbPixels()
+{
+	return mNbPixels;
+}
+
 void Sshape::createPixels()
 {
 	int currentX = mCoordX;
@@ -68,7 +73,7 @@ void Sshape::createPixels()
 	int* tempYCoord = &currentY;
 	
 	mPixels = new Pixel * [mFreemanNumber];
-
+	mNbPixels = mFreemanNumber;
 	for (int i = 0; i < mFreemanNumber; i++)
 	{
 		mPixels[i] = new Pixel();
@@ -92,39 +97,54 @@ void Sshape::createPixels()
 
 void Sshape::findPixelCoordinate(int direction, Pixel & pixel, int* currentXCoord, int* currentYCoord)
 {
-	int** xValue = &currentXCoord;
-	int** yValue = &currentYCoord;
+
 	switch (direction)
 	{
 	case 1:
 		// x : -1 , y : +1
-
-		pixel.setCoordinates(**xValue - 1, **yValue + 1);
+		*currentXCoord -= 1;
+		*currentYCoord += 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	case 2:
 		// x : +0 , y : +1
-		pixel.setCoordinates(**xValue + 0, **yValue + 1);
+		*currentYCoord += 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	case 3:
 		// x : +1 , y : +1
-		pixel.setCoordinates(**xValue + 1, **yValue + 1);
+		*currentXCoord += 1;
+		*currentYCoord += 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	case 4:
 		// x : +1 , y : +0
-		pixel.setCoordinates(**xValue + 1, **yValue + 0);
+		*currentXCoord += 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	case 5:
 		// x : + 1 , y : -1
-		pixel.setCoordinates(**xValue + 1, **yValue - 1);
+		*currentXCoord += 1;
+		*currentYCoord -= 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	case 6:
 		// x : +0 , y : -1
-		pixel.setCoordinates(**xValue + 0, **yValue - 1);
+		*currentYCoord -= 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	case 7:
 		// x : -1 , y : -1
-		pixel.setCoordinates(**xValue - 1, **yValue - 1);
+		*currentXCoord -= 1;
+		*currentYCoord -= 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
+		break;
+	case 0:
+		// x : -1, y : 0
+		*currentXCoord -= 1;
+		pixel.setCoordinates(*currentXCoord, *currentYCoord);
 		break;
 	}
+
 }
 

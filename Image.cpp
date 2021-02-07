@@ -104,7 +104,7 @@ int Image::convertCharToIntArray(string line, int length, int startDigit)
 	return sum;
 }
 
-void Image::stockFreemanCodeInfos(Sshape & shape, string line)
+void Image::stockFreemanCodeInfos(Sshape& shape, string line)
 {
 	// On s'intéresse à forme en tant que telles
 	// start with a conversion of chars to int
@@ -157,7 +157,7 @@ void Image::getSpecificLine(ifstream& textFile, int desiredLineOfFile, string& a
 	}
 }
 
-void Image::readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string line, int codeSize, int startFreeman)
+void Image::readAssociatedFreemanCodeLine(Sshape& shapesFreemanCode, string line, int codeSize, int startFreeman)
 {
 	// convert string values to int and put it in a int *
 	int* freemanCode = new int[codeSize];
@@ -166,7 +166,7 @@ void Image::readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string lin
 	istringstream ss(line);
 	string token;
 	char value;
-	while (getline(ss, token, ' ') && j<codeSize) {
+	while (getline(ss, token, ' ') && j < codeSize) {
 		if (i > startFreeman) {
 			value = token[0];
 			freemanCode[j] = convertCharToInt(value);
@@ -175,7 +175,7 @@ void Image::readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string lin
 		i++;
 	}
 	shapesFreemanCode.setCodeFreeman(freemanCode);
-	
+
 }
 
 void Image::screenDisplay()
@@ -187,9 +187,110 @@ void Image::screenDisplay()
 		{
 			cout << mSshapeArray[i]->pixels()[j]->coordinates().x();
 			cout << mSshapeArray[i]->pixels()[j]->coordinates().y();
-
 			cout << endl;
 		}
-		
-	}	
+	}
+	mergeShapes();
+	writeToFile();
+}
+
+void Image::mergeShapes()
+{
+	bool insideShape = 0;
+	mImageRows = new int* [mNbRow] {0};
+	for (int i = 0; i < mNbRow; ++i) {
+		mImageRows[i] = new int[mNbColumn] {0};
+	}
+
+	for (int i = 0; i < mNbShape; i++)
+	{
+		//array contenant les coordonnées les plus à gauche de chaque rangée pour chaque shape
+		mSshapeArray[i]->leftBorder = new int[mNbRow];
+		mSshapeArray[i]->rightBorder = new int[mNbRow];
+		for (int k = 0; k < mNbRow; k++)
+		{
+			mSshapeArray[i]->leftBorder[k] = 10000;
+			mSshapeArray[i]->rightBorder[k] = -1;
+		}
+
+		int nbPixels = mSshapeArray[i]->nbPixels();
+		for (int j = 0; j < nbPixels; j++)
+		{
+			int x = mSshapeArray[i]->pixels()[j]->coordinates().x();
+			int y = mSshapeArray[i]->pixels()[j]->coordinates().y();
+			if (mSshapeArray[i]->pixels()[j]->isStartingPoint())
+				mImageRows[x][y] = 2;
+			else
+				mImageRows[x][y] = 1;
+			if (mSshapeArray[i]->leftBorder[y] > x)
+				mSshapeArray[i]->leftBorder[y] = x;
+			if (mSshapeArray[i]->rightBorder[y] < x)
+				mSshapeArray[i]->rightBorder[y] = x;
+
+		}
+
+		/*for (int k = 0; k < mNbRow; k++)
+		{
+			mSshapeArray[i]->leftBorder[k] = 10000;
+			mSshapeArray[i]->rightBorder[k] = -1;
+			printf("Le left border pour la rangée %d de la shape %d est %d et son right border est %d\n", k, i, mSshapeArray[i]->leftBorder[k], mSshapeArray[i]->rightBorder[k]);
+			for (int l = 0; l < mNbColumn; l++)
+			{
+				if (mImageRows[k][l] > 0 && mSshapeArray[i]->leftBorder[k] > l)
+					mSshapeArray[i]->leftBorder[k] = l;
+				if (mImageRows[k][l] > 0 && mSshapeArray[i]->rightBorder[k] < l)
+					mSshapeArray[i]->rightBorder[k] = l;
+			}
+		}*/
+		for (int k = 0; k < mNbRow; k++)
+		{
+			printf("Le left border pour la rangée %d de la shape %d est %d et son right border est %d\n", k, i, mSshapeArray[i]->leftBorder[k], mSshapeArray[i]->rightBorder[k]);
+			for (int l = 0; l < mNbColumn; l++)
+			{
+				if ((l > mSshapeArray[i]->leftBorder[k]) && (l < mSshapeArray[i]->rightBorder[k]))
+					mImageRows[l][k] = 1;
+			}
+		}
+	}
+
+
+
+
+	for (int i = 0; i < mNbRow; i++)
+	{
+		for (int j = 0; j < mNbColumn; j++)
+		{
+			printf("%d", mImageRows[i][j]);
+		}
+	}
+}
+void Image::writeToFile() {
+	ofstream freemanFile;
+	freemanFile.open("test3.txt");
+	for (int i = 0; i < mNbRow; i++)
+	{
+		for (int j = 0; j < mNbColumn; j++)
+		{
+			if (i == 0 || i == mNbRow-1) {
+				freemanFile << "%";
+			}
+			else if (j == 0 || j == mNbColumn-1) {
+				freemanFile << "%";
+			}
+				switch (mImageRows[i][j]) {
+				case 0:
+					freemanFile << " ";
+					break;
+				case 1:
+					freemanFile << "*";
+					break;
+				case 2:
+					freemanFile << "X";
+					break;
+			}
+		}
+		freemanFile << std::endl;
+	}
+	freemanFile << std::endl << "Il y a " << mNbShape <<" objets dans l'image" << std::endl;
+	freemanFile.close();
 }

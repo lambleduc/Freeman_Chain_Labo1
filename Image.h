@@ -29,10 +29,15 @@ public:
 	void readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string Line, int codeSize, int startFreeman);
 	void screenDisplay();
 
+	void mergeShapes();
+
+	void writeToFile();
 
 private:
 	int mNbShape=0;
 	int mNbRow=0;
 	int mNbColumn=0;
+	int** mImageRows;
 	Sshape** mSshapeArray;
+	
 };

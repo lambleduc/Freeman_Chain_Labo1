@@ -22,6 +22,6 @@ public:
 private:
 	Vect2d mCoordinates;
 	bool mBinaryColor;
-	bool mIsStartingPoint;
+	bool mIsStartingPoint = 0;
 };
 
