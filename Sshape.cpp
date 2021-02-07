@@ -37,7 +37,44 @@ void Sshape::displayCodeFreeman()
 		std::cout << mCodeFreeman[i] << ' ';
 	}
 	std::cout << std::endl;
-		
+
+}
+
+int Sshape::Aire()
+{
+	return mAire;
+}
+
+int Sshape::Perimetre()
+{
+	return mPerimetre;
+}
+
+void Sshape::setAire(int aire)
+{
+	mAire = aire;
+}
+
+void Sshape::calculatePerimeter()
+{
+	for (int i = 0; i < mFreemanNumber; i++)
+	{
+		switch (mCodeFreeman[i]) {
+		case(0):
+		case(2):
+		case(4):
+		case(6):
+			mPerimetre += 1;
+			break;
+		case(1):
+		case(3):
+		case(5):
+		case(7):
+			mPerimetre += sqrt(2);
+			break;
+		}
+
+	}
 }
 
 void Sshape::setCoordX(int coordX)
@@ -71,31 +108,31 @@ void Sshape::createPixels()
 	int currentY = mCoordY;
 	int* tempXCoord = &currentX;
 	int* tempYCoord = &currentY;
-	
+
 	mPixels = new Pixel * [mFreemanNumber];
 	mNbPixels = mFreemanNumber;
 	for (int i = 0; i < mFreemanNumber; i++)
 	{
 		mPixels[i] = new Pixel();
-		if(i == 0)
+		if (i == 0)
 		{
 			// create the starting pixel from coordx, coordy
-			
+
 			mPixels[i]->setCoordinates(mCoordX, mCoordY);
 			mPixels[i]->setIsStartingPoint(true);
 		}
-		else 
+		else
 		{
-			
+
 			findPixelCoordinate(mCodeFreeman[i - 1], *mPixels[i], tempXCoord, tempYCoord);
-		
+
 		}
-		
-		
+
+
 	}
 }
 
-void Sshape::findPixelCoordinate(int direction, Pixel & pixel, int* currentXCoord, int* currentYCoord)
+void Sshape::findPixelCoordinate(int direction, Pixel& pixel, int* currentXCoord, int* currentYCoord)
 {
 
 	switch (direction)

@@ -14,7 +14,11 @@ struct Sshape
 	void displayCodeFreeman();
 	int* leftBorder;
 	int* rightBorder;
+	int Aire();
+	int Perimetre();
 
+	void setAire(int aire);
+	void calculatePerimeter();
 	void setCoordX(int coordX);
 	void setCoordY(int coordY);
 	void setFreemanNumber(int freemanNumber);
@@ -26,7 +30,8 @@ struct Sshape
 private:
 	int mCoordX;
 	int mCoordY;
-
+	int mPerimetre=0;
+	int mAire=0;
 	int mNbPixels = 0;
 	//We will determine the size of array from this number
 	int mFreemanNumber;

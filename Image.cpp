@@ -233,7 +233,6 @@ void Image::mergeShapes()
 		{
 			mSshapeArray[i]->leftBorder[k] = 10000;
 			mSshapeArray[i]->rightBorder[k] = -1;
-			printf("Le left border pour la rangée %d de la shape %d est %d et son right border est %d\n", k, i, mSshapeArray[i]->leftBorder[k], mSshapeArray[i]->rightBorder[k]);
 			for (int l = 0; l < mNbColumn; l++)
 			{
 				if (mImageRows[k][l] > 0 && mSshapeArray[i]->leftBorder[k] > l)
@@ -244,13 +243,17 @@ void Image::mergeShapes()
 		}*/
 		for (int k = 0; k < mNbRow; k++)
 		{
-			printf("Le left border pour la rangée %d de la shape %d est %d et son right border est %d\n", k, i, mSshapeArray[i]->leftBorder[k], mSshapeArray[i]->rightBorder[k]);
 			for (int l = 0; l < mNbColumn; l++)
 			{
 				if ((l > mSshapeArray[i]->leftBorder[k]) && (l < mSshapeArray[i]->rightBorder[k]))
+				{
 					mImageRows[l][k] = 1;
+					mSshapeArray[i]->setAire(mSshapeArray[i]->Aire() + 1);
+				}
 			}
 		}
+		mSshapeArray[i]->calculatePerimeter();
+		mSshapeArray[i]->setAire(mSshapeArray[i]->Aire() + mSshapeArray[i]->freemanNumber());
 	}
 
 
@@ -271,12 +274,13 @@ void Image::writeToFile() {
 	{
 		for (int j = 0; j < mNbColumn; j++)
 		{
-			if (i == 0 || i == mNbRow-1) {
+			if (i == 0 || i == mNbRow - 1) {
 				freemanFile << "%";
 			}
-			else if (j == 0 || j == mNbColumn-1) {
+			else if (j == 0 || j == mNbColumn - 1) {
 				freemanFile << "%";
 			}
+			else {
 				switch (mImageRows[i][j]) {
 				case 0:
 					freemanFile << " ";
@@ -287,10 +291,15 @@ void Image::writeToFile() {
 				case 2:
 					freemanFile << "X";
 					break;
+				}
 			}
 		}
 		freemanFile << std::endl;
 	}
-	freemanFile << std::endl << "Il y a " << mNbShape <<" objets dans l'image" << std::endl;
+	freemanFile << std::endl << "Il y a " << mNbShape << " objets dans l'image" << std::endl;
+	for (int j = 0; j < mNbShape; j++)
+	{
+		freemanFile << "Objet no. " << j << " : Perimetre = " << mSshapeArray[j]->Perimetre() << "   Aire = " << mSshapeArray[j]->Aire() << std::endl; 
+	}
 	freemanFile.close();
 }
