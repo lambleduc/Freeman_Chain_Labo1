@@ -11,6 +11,7 @@ Image::Image()
 	catchUserFile();
 	readFreemanCodeFile();
 	screenDisplay();
+	
 }
 
 Image::~Image()
