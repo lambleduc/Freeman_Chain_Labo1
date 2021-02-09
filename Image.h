@@ -14,6 +14,7 @@ class Image
 public:
 	Image();
 	~Image();
+	void destroyImageRow(int** ptr, int row);
 	int nbShape();
 	int nbRow();
 	int nbColumn();
@@ -29,6 +30,7 @@ public:
 	void readAssociatedFreemanCodeLine(Sshape & shapesFreemanCode, string Line, int codeSize, int startFreeman);
 	void screenDisplay();
 	void catchUserFile();
+	void destroyShape(Sshape** ptr, int row);
 
 	void mergeShapes();
 

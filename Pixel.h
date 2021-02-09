@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Vect2d.h"
 
+using namespace std;
+
 class Pixel
 {
 public:

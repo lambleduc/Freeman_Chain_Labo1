@@ -8,7 +8,26 @@ Sshape::Sshape()
 
 Sshape::~Sshape()
 {
+	for (int i = 0; i < mNbPixels; i++)
+	{
+		delete mPixels[i];
+		mPixels[i] = nullptr;
+	}
+	delete[] mPixels;
+	mPixels = nullptr;
+	cout << "~Shape" << endl;
 }
+
+void Sshape::destroy(Pixel** ptr, int row)
+{
+	for (int i = 0; i < row; i++)
+	{
+		delete[] ptr[i];
+	}
+	delete[] ptr;
+	ptr = nullptr;
+}
+
 
 int Sshape::coordX()
 {

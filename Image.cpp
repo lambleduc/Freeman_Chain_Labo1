@@ -16,6 +16,14 @@ Image::Image()
 
 Image::~Image()
 {
+	for (int i = 0; i < mNbShape; i++)
+	{
+		delete mSshapeArray[i];
+		mSshapeArray[i] = nullptr;
+	}
+	delete[] mSshapeArray;
+	mSshapeArray = nullptr;
+	cout << "~Image" << endl;
 }
 
 int Image::nbShape()
@@ -205,9 +213,11 @@ void Image::catchUserFile()
 	mInputFileName = userFileName;
 }
 
+
 void Image::mergeShapes()
 {
 	bool insideShape = 0;
+	
 	mImageRows = new int* [mNbRow] {0};
 	for (int i = 0; i < mNbRow; ++i) {
 		mImageRows[i] = new int[mNbColumn] {0};
@@ -240,18 +250,6 @@ void Image::mergeShapes()
 
 		}
 
-		/*for (int k = 0; k < mNbRow; k++)
-		{
-			mSshapeArray[i]->leftBorder[k] = 10000;
-			mSshapeArray[i]->rightBorder[k] = -1;
-			for (int l = 0; l < mNbColumn; l++)
-			{
-				if (mImageRows[k][l] > 0 && mSshapeArray[i]->leftBorder[k] > l)
-					mSshapeArray[i]->leftBorder[k] = l;
-				if (mImageRows[k][l] > 0 && mSshapeArray[i]->rightBorder[k] < l)
-					mSshapeArray[i]->rightBorder[k] = l;
-			}
-		}*/
 		for (int k = 0; k < mNbRow; k++)
 		{
 			for (int l = 0; l < mNbColumn; l++)
@@ -266,9 +264,6 @@ void Image::mergeShapes()
 		mSshapeArray[i]->calculatePerimeter();
 		mSshapeArray[i]->setAire(mSshapeArray[i]->Aire() + mSshapeArray[i]->freemanNumber());
 	}
-
-
-
 
 	for (int i = 0; i < mNbRow; i++)
 	{

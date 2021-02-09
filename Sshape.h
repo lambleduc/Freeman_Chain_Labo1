@@ -2,10 +2,13 @@
 #include <iostream>
 #include "Pixel.h"
 
+using namespace std;
+
 struct Sshape
 {
 	Sshape();
 	~Sshape();
+	void destroy(Pixel** ptr, int row);
 	int coordX();
 	int coordY();
 	int freemanNumber();

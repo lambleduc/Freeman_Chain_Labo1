@@ -7,6 +7,7 @@ Pixel::Pixel()
 
 Pixel::~Pixel()
 {
+	cout << "~Pixel" << endl;
 }
 
 bool Pixel::binaryColor()
