@@ -8,10 +8,7 @@ Image::Image()
 	mNbRow{ 0 },
 	mNbShape{ 0 }
 {
-	catchUserFile();
-	readFreemanCodeFile();
-	screenDisplay();
-	
+	readFreemanCodeFile("FreemanCode.txt");
 }
 
 Image::~Image()
@@ -43,12 +40,12 @@ void Image::setNbRow(int rowCount)
 	mNbRow = rowCount;
 }
 
-void Image::readFreemanCodeFile()
+void Image::readFreemanCodeFile(string pathFreemanCodeFile)
 {
 
 	std::string line;
 	std::ifstream fileFreeman;
-	fileFreeman.open(mInputFileName, std::ifstream::in);
+	fileFreeman.open(pathFreemanCodeFile, std::ifstream::in);
 	int lineIterator = 0;
 
 	int rowDigits = 0;
